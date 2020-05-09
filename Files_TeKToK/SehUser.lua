@@ -1,18 +1,18 @@
 local function SehUser(msg)
 local text = msg.content_.text_
 if text == 'تفعيل صيح' and Owner(msg) then   
-database:del(bot_id..'TeKToK:Seh:User'..msg.chat_id_)  
+redis:del(bot_id..'TeKToK:Seh:User'..msg.chat_id_)  
 send(msg.chat_id_, msg.id_,'☑┇تم تفعيل امر صيح') 
 return false
 end
 if text == 'تعطيل صيح' and Owner(msg) then  
-database:set(bot_id..'TeKToK:Seh:User'..msg.chat_id_,true)  
+redis:set(bot_id..'TeKToK:Seh:User'..msg.chat_id_,true)  
 send(msg.chat_id_, msg.id_,'☑┇تم تعطيل امر صيح') 
 return false
 end
 if text and text:match("^صيح @(.*)$") then
 local username = text:match("^صيح @(.*)$")
-if not database:get(bot_id..'TeKToK:Seh:User'..msg.chat_id_) then
+if not redis:get(bot_id..'TeKToK:Seh:User'..msg.chat_id_) then
 function start_function(extra, result, success)
 if result and result.message_ and result.message_ == "USERNAME_NOT_OCCUPIED" then 
 send(msg.chat_id_, msg.id_,'🔘┇المعرف غلط ') 
@@ -44,5 +44,5 @@ end
 
 end
 return {
-TeKToK = SehUser
+tektokFile = SehUser
 }
